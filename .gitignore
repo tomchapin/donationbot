@@ -82,3 +82,9 @@ pickle-email-*.html
 
 # tilde files are usually backup files from a text editor
 *~
+
+# Node modules
+/node_modules
+
+# Compiled Assets
+/public/assets

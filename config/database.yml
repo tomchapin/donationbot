@@ -19,7 +19,7 @@ development:
   database: donationbot_development
   pool:     5
   username: donationbot
-  password:
+  password: postgres
   template: template0
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -47,7 +47,7 @@ test:
   database: donationbot_test
   pool:     5
   username: donationbot
-  password:
+  password: postgres
   template: template0
 
 production:

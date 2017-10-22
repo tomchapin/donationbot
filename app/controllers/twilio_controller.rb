@@ -24,7 +24,7 @@ class TwilioController < ApplicationController
                                                            amount: BigDecimal.new(transaction_received[2]),
                                                            message: transaction_received[3],
                                                            balance: BigDecimal.new(transaction_received[4]))
-        notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name} (#{transaction.message})! The current donut fund balance is now #{big_decimal_to_currency transaction.balance}"
+        notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name} (#{transaction.message})! The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
         puts notification_message
         notifier = Slack::Notifier.new fund.slack_webhook_url
         notifier.ping notification_message

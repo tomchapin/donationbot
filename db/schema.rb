@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171022004552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "square_cash_funds", force: :cascade do |t|
+    t.string "name", limit: 100, null: false
+    t.string "phone_number", limit: 20, null: false
+    t.string "slack_webhook_url", limit: 255, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "square_cash_transactions", force: :cascade do |t|
+    t.bigint "square_cash_fund_id"
+    t.string "person_name", limit: 255, null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.string "message", limit: 255
+    t.decimal "balance", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["square_cash_fund_id"], name: "index_square_cash_transactions_on_square_cash_fund_id"
+  end
+
+  add_foreign_key "square_cash_transactions", "square_cash_funds"
 end

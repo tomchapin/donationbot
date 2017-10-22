@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 gem 'pry', '~> 0.10.4'
 gem 'slack-notifier', '~> 1.5', '>= 1.5.1'
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'

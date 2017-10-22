@@ -33,10 +33,8 @@ class TwilioController < ApplicationController
       # Handle SMS messages about money being spent
       money_spent_match = sms_message.match(/Square Cash: You spent \$(.*) at (.*)/)
       if money_spent_match
-        most_recent_transaction = fund.square_cash_transactions.order(:created_at).last
-        current_balance = most_recent_transaction.balance rescue BigDecimal.new('0')
         amount_spent = BigDecimal.new(money_spent_match[1])
-        new_balance = current_balance - amount_spent
+        new_balance = fund.balance - amount_spent
         transaction = fund.square_cash_transactions.create(person_name: 'Me',
                                                            amount: amount_spent,
                                                            message: money_spent_match[2],

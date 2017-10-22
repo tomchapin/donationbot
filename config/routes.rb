@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   post 'twilio/voice' => 'twilio#voice'
 
-  post 'twilio/recieve_sms' => 'twilio#recieve_sms'
+  post 'twilio/receive_sms' => 'twilio#receive_sms'
 
   post 'slack/balance' => 'slack#balance'
 end

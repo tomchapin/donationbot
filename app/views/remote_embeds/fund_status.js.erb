@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
     $('.fund-balance').html('<%= @fund_balance %>');
+    $('.recent-donors').html('<% @recent_transactions.each do |transaction| %><%= "#{big_decimal_to_currency transaction.amount} - #{transaction.person_name}" %><br/><% end %>');
 });
 

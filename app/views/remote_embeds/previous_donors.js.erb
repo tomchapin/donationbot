@@ -1,0 +1,4 @@
+jQuery(document).ready(function($) {
+    $('.previous-donors').html('<% @all_transactions.each do |transaction| %><%= "#{big_decimal_to_currency transaction.amount} - #{transaction.person_name}" %><br/><% end %>');
+});
+

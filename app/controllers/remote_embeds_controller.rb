@@ -5,14 +5,14 @@ class RemoteEmbedsController < ApplicationController
 
   def fund_status
     @fund_balance = big_decimal_to_currency(@fund.balance)
-    @recent_transactions= @fund.square_cash_transactions.order(:created_at).limit(6)
+    @recent_transactions= @fund.square_cash_transactions.order(created_at: :desc).limit(6)
     respond_to do |format|
       format.js
     end
   end
 
   def previous_donors
-    @all_transactions = @fund.square_cash_transactions.order(:created_at)
+    @all_transactions = @fund.square_cash_transactions.order(created_at: :desc)
     respond_to do |format|
       format.js
     end

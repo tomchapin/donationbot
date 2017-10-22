@@ -15,16 +15,22 @@ class TwilioController < ApplicationController
 
   def receive_sms
     sms_message = params['Body']
-    parsed_message = sms_message.match(/Square Cash: (.*) sent you \$(.*) for (.*). You now have \$(.*) available in your Cash app/)
-    donor = parsed_message[1]
-    donation_amount = parsed_message[2]
-    donation_message = parsed_message[3]
-    balance = parsed_message[4]
-    notification_message = "$#{donation_amount} donation received from #{donor} (#{donation_message})! The current donut fund balance is now $#{balance}."
+    transaction_received = sms_message.match(/Square Cash: (.*) sent you \$(.*) for (.*). You now have \$(.*) available in your Cash app/)
+    if transaction_received
 
-    puts notification_message
+      fund = SquareCashFund.find_by_phone_number(params['To'])
+      if fund
+        transaction = fund.square_cash_transactions.create(person_name: transaction_received[1],
+                                                           amount: BigDecimal.new(transaction_received[2]),
+                                                           message: transaction_received[3],
+                                                           balance: BigDecimal.new(transaction_received[4]))
+        notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name} (#{transaction.message})! The current donut fund balance is now #{big_decimal_to_currency transaction.balance}"
+        puts notification_message
+        notifier = Slack::Notifier.new fund.slack_webhook_url
+        notifier.ping notification_message
+      end
 
-    notifier = Slack::Notifier.new "https://hooks.slack.com/services/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"
-    notifier.ping notification_message
+    end
   end
+
 end

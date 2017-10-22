@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  include ApplicationHelper
+
   protected
   def authenticate_api_user!
-    authenticate_or_request_with_http_basic do |username, password|
-      username == ENV['API_USERNAME'] && password == ENV['API_PASSWORD']
+    if params['token'] != ENV['API_AUTH_KEY']
+      redirect_to :action => 'forbidden', :status => 403
     end
   end
 

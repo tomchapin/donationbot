@@ -86,5 +86,8 @@ pickle-email-*.html
 # Node modules
 /node_modules
 
+# VS Code
+/.vscode
+
 # Compiled Assets
 /public/assets

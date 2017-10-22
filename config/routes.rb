@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  ActiveAdmin.routes(self)
   root to: 'visitors#index'
 
   post 'twilio/voice' => 'twilio#voice'

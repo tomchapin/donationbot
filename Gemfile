@@ -4,6 +4,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 ruby '2.3.3'
+gem 'dotenv-rails', groups: [:development, :test]
 gem 'rails', '~> 5.1.4'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
@@ -15,6 +16,7 @@ gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 gem 'pry', '~> 0.10.4'
 gem 'slack-notifier', '~> 1.5', '>= 1.5.1'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'activeadmin', github: 'activeadmin'
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'

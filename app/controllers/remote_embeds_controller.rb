@@ -12,7 +12,7 @@ class RemoteEmbedsController < ApplicationController
   end
 
   def previous_donors
-    @all_transactions = @fund.square_cash_transactions.order(created_at: :desc)
+    @all_transactions = @fund.square_cash_transactions.order(created_at: :desc).where('amount > 0')
     respond_to do |format|
       format.js
     end

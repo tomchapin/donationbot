@@ -15,30 +15,31 @@ class TwilioController < ApplicationController
 
   def receive_sms
     sms_message = params['Body']
+    notification_message = nil
 
     fund = SquareCashFund.find_by_phone_number(params['To'])
     if fund
 
       # Check for matches
-      money_received_match = sms_message.match(/Square Cash: (.*) sent you \$(.*). You now have \$(.*) available in your Cash app/)
       money_received_for_reason_match = sms_message.match(/Square Cash: (.*) sent you \$(.*) for (.*). You now have \$(.*) available in your Cash app/)
+      money_received_match = sms_message.match(/Square Cash: (.*) sent you \$(.*). You now have \$(.*) available in your Cash app/)
       money_spent_match = sms_message.match(/Square Cash: You spent \$(.*) at (.*)/)
 
-      if money_received_match
+      if money_received_for_reason_match
         puts 'Money received!'
-        transaction = fund.square_cash_transactions.create(person_name: money_received_match[1],
-                                                           amount: BigDecimal.new(money_received_match[2]),
-                                                           message: '',
-                                                           balance: BigDecimal.new(money_received_match[3]))
-        notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name}! The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
-
-      elsif money_received_for_reason_match
-        puts 'Money received!'
-        transaction = fund.square_cash_transactions.create(person_name: money_received_match[1],
-                                                           amount: BigDecimal.new(money_received_match[2]),
-                                                           message: money_received_match[3],
-                                                           balance: BigDecimal.new(money_received_match[4]))
+        transaction = fund.square_cash_transactions.create(person_name: money_received_for_reason_match[1],
+                                                           amount: BigDecimal.new(money_received_for_reason_match[2]),
+                                                           message: money_received_for_reason_match[3],
+                                                           balance: BigDecimal.new(money_received_for_reason_match[4]))
         notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name} (#{transaction.message})! The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
+
+      elsif money_received_match
+          puts 'Money received!'
+          transaction = fund.square_cash_transactions.create(person_name: money_received_match[1],
+                                                             amount: BigDecimal.new(money_received_match[2]),
+                                                             message: '',
+                                                             balance: BigDecimal.new(money_received_match[3]))
+          notification_message = "#{big_decimal_to_currency transaction.amount} donation received from #{transaction.person_name}! The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
 
       elsif money_spent_match
         puts 'Money spent!'

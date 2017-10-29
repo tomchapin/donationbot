@@ -21,9 +21,9 @@ class TwilioController < ApplicationController
     if fund
 
       # Check for matches
-      money_received_for_reason_match = sms_message.match(/Square Cash: (.*) sent you \$(.*) for (.*). You now have \$(.*) available in your Cash app/)
-      money_received_match = sms_message.match(/Square Cash: (.*) sent you \$(.*). You now have \$(.*) available in your Cash app/)
-      money_spent_match = sms_message.match(/Square Cash: You spent \$(.*) at (.*)/)
+      money_received_for_reason_match = sms_message.match(/(?:Square Cash|Cash App): (.*) sent you \$(.*) for (.*). You now have \$(.*) available in your Cash app/)
+      money_received_match = sms_message.match(/(?:Square Cash|Cash App): (.*) sent you \$(.*). You now have \$(.*) available in your Cash app/)
+      money_spent_match = sms_message.match(/(?:Square Cash|Cash App): You spent \$(.*) at (.*)/)
 
       if money_received_for_reason_match
         puts 'Money received!'

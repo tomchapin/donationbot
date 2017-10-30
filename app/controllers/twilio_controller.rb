@@ -46,7 +46,7 @@ class TwilioController < ApplicationController
         amount_spent = BigDecimal.new(money_spent_match[1])
         new_balance = fund.balance - amount_spent
         transaction = fund.square_cash_transactions.create(person_name: 'Me',
-                                                           amount: amount_spent,
+                                                           amount: amount_spent * -1,
                                                            message: money_spent_match[2],
                                                            balance: new_balance)
         notification_message = "#{big_decimal_to_currency transaction.amount} spent at #{transaction.message}. The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"

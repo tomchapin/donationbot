@@ -49,7 +49,7 @@ class TwilioController < ApplicationController
                                                            amount: amount_spent * -1,
                                                            message: money_spent_match[2],
                                                            balance: new_balance)
-        notification_message = "#{big_decimal_to_currency transaction.amount} spent at #{transaction.message}. The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
+        notification_message = "#{big_decimal_to_currency amount_spent} spent at #{transaction.message}. The current #{fund.name} balance is now #{big_decimal_to_currency transaction.balance}"
 
       else
         raise 'Unable to match SMS message to regex patterns!'

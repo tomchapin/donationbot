@@ -1,0 +1,4 @@
+class IncomingMessage < ApplicationRecord
+
+
+end

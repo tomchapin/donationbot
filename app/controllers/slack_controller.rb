@@ -3,7 +3,7 @@ class SlackController < ApplicationController
 
   def balance
     respond_to do |format|
-      msg = { :text => "THis is a response!", :mrkdwn => true }
+      msg = { :text => "This is a response!", :mrkdwn => true }
       format.json  { render :json => msg }
     end
   end

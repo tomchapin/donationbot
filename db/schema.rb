@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022015922) do
+ActiveRecord::Schema.define(version: 20181001174931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,44 @@ ActiveRecord::Schema.define(version: 20171022015922) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "incoming_messages", force: :cascade do |t|
+    t.string "to_country"
+    t.string "to_state"
+    t.string "sms_message_sid"
+    t.string "num_media"
+    t.string "to_city"
+    t.string "from_zip"
+    t.string "sms_sid"
+    t.string "from_state"
+    t.string "sms_status"
+    t.string "from_city"
+    t.string "body"
+    t.string "from_country"
+    t.string "to"
+    t.string "to_zip"
+    t.string "num_segments"
+    t.string "message_sid"
+    t.string "account_sid"
+    t.string "from"
+    t.string "api_version"
+    t.boolean "processed", default: false
+    t.datetime "processed_at"
+    t.text "processing_error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "outgoing_slack_messages", force: :cascade do |t|
+    t.text "message"
+    t.boolean "posted_to_slack"
+    t.datetime "posted_to_slack_at"
+    t.text "slack_message_id"
+    t.bigint "square_cash_fund_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["square_cash_fund_id"], name: "index_outgoing_slack_messages_on_square_cash_fund_id"
   end
 
   create_table "square_cash_funds", force: :cascade do |t|

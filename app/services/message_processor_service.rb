@@ -15,9 +15,15 @@ class MessageProcessorService
       if fund
 
         # Check for matches
-        # Example message: 28581 - Cash App: Tom Chapin sent you $1 for donuts.
+
+        # Example message: 28581 - Cash App: Tom Chapin sent you $1 for donuts
+        # Example message: 28581 - Cash App: Tom Chapin sent you $1 for Transfer from Weekly/Monthly Donors
         money_received_for_reason_match = sms_message.match(/(?:Square Cash|Cash App): (.*) sent you \$(.*) for (.*)/)
+
+        # Example message: 28581 - Cash App: Tom Chapin sent you $1
         money_received_match = sms_message.match(/(?:Square Cash|Cash App): (.*) sent you \$(.*)/)
+
+        # Example message: 28581 - Cash App: You spent $32.31 at Bosa Donuts
         money_spent_match = sms_message.match(/(?:Square Cash|Cash App): You spent \$(.*) at (.*)/)
 
         if money_received_for_reason_match
